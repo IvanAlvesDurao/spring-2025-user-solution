@@ -89,4 +89,9 @@ public class DigitalItemRepositoryIntegrationTest {
         assert digitalItemList.contains(digitalItemEntity2.toDomain());
         assert digitalItemList.contains(digitalItemEntity3.toDomain());
     }
+
+    @Test
+    public void whenfindDigitalItemBySessionHTTP_ExpectDigitalItemBySessionList() {
+
+    }
 }
