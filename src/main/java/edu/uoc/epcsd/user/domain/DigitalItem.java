@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DigitalItem {
+public class
+DigitalItem {
 	
     @NotNull
     private Long id;
