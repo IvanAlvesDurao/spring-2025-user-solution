@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.uoc.epcsd.user.application.rest.DigitalItemRESTController;
 import edu.uoc.epcsd.user.domain.DigitalItem;
+import edu.uoc.epcsd.user.domain.DigitalSession;
 import edu.uoc.epcsd.user.domain.repository.DigitalItemRepository;
 import edu.uoc.epcsd.user.domain.repository.DigitalSessionRepository;
 import edu.uoc.epcsd.user.domain.service.DigitalItemService;
@@ -37,15 +38,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class DigitalItemRESTControllerUnitTest {
 
-    private long digitalItemId = 123456L;
-    private long digitalSessionId = 654321L;
-    private String description = "Description: test";
-    private long lat = 456123L;
-    private long lon = 789123L;
-    private String link ="www.test.com";
+    private final long digitalSessionId = 654321L;
 
     @Autowired
-    private  ObjectMapper mapper;
+    private  ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
@@ -56,7 +52,11 @@ public class DigitalItemRESTControllerUnitTest {
 
     @BeforeEach
     public void setUp() {
-
+        long digitalItemId = 123456L;
+        String description = "Description: test";
+        long lat = 456123L;
+        long lon = 789123L;
+        String link = "www.test.com";
         digitalItem = DigitalItem.builder()
                 .id(digitalItemId)
                 .digitalSessionId(digitalSessionId)
@@ -82,7 +82,7 @@ public class DigitalItemRESTControllerUnitTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        List<DigitalItem> returnedDigitalItemList = this.mapper.readValue(
+        List<DigitalItem> returnedDigitalItemList = this.objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<List<DigitalItem>>() {});
 

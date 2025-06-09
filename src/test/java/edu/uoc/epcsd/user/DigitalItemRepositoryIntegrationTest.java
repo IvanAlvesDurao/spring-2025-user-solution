@@ -27,13 +27,12 @@ public class DigitalItemRepositoryIntegrationTest {
     private TestEntityManager entityManager;
 
     private DigitalSessionEntity digitalSessionEntity;
-    private DigitalItemEntity  digitalItemEntity1, digitalItemEntity2, digitalItemEntity3, digitalItemEntity4;
-    private UserEntity userEntity;
+    private DigitalItemEntity  digitalItemEntity1, digitalItemEntity2, digitalItemEntity3;
 
     @BeforeEach
     public void setUp() {
 
-        userEntity = UserEntity.builder()
+        UserEntity userEntity = UserEntity.builder()
                 .fullName("Ivan Alves Durao")
                 .email("ialvesdurao@uoc.edu")
                 .password("")
@@ -90,8 +89,4 @@ public class DigitalItemRepositoryIntegrationTest {
         assert digitalItemList.contains(digitalItemEntity3.toDomain());
     }
 
-    @Test
-    public void whenfindDigitalItemBySessionHTTP_ExpectDigitalItemBySessionList() {
-
-    }
 }
