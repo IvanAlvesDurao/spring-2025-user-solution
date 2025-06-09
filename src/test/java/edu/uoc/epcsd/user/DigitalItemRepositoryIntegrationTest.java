@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @Import(DigitalItemRepositoryImpl.class)
-
+@Transactional
 public class DigitalItemRepositoryIntegrationTest {
 
     @Autowired
@@ -56,7 +58,7 @@ public class DigitalItemRepositoryIntegrationTest {
                 .lon(1L)
                 .link("Test: Link 1")
                 .build();
-        entityManager.persist(digitalItemEntity1);
+        entityManager.persistAndFlush(digitalItemEntity1);
 
         digitalItemEntity2 = DigitalItemEntity.builder()
                 .digitalSession(digitalSessionEntity)
@@ -65,7 +67,7 @@ public class DigitalItemRepositoryIntegrationTest {
                 .lon(2L)
                 .link("Test: Link 2")
                 .build();
-        entityManager.persist(digitalItemEntity2);
+        entityManager.persistAndFlush(digitalItemEntity2);
 
         digitalItemEntity3 = DigitalItemEntity.builder()
                 .digitalSession(digitalSessionEntity)
@@ -74,7 +76,7 @@ public class DigitalItemRepositoryIntegrationTest {
                 .lon(3L)
                 .link("Test: Link 3")
                 .build();
-        entityManager.persist(digitalItemEntity3);
+        entityManager.persistAndFlush(digitalItemEntity3);
     }
 
 

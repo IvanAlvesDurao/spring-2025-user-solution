@@ -89,5 +89,6 @@ public class DigitalItemRESTControllerUnitTest {
         assertThat(returnedDigitalItemList).isEqualTo(expectedDigitalItemList);
 
         verify(digitalItemService, times(1)).findDigitalItemBySession(digitalSessionId);
+
     }
 }

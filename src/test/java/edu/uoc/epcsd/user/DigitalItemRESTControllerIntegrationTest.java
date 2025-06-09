@@ -37,6 +37,7 @@ public class DigitalItemRESTControllerIntegrationTest {
 
     private DigitalSessionEntity digitalSessionEntity;
     List<DigitalItem> expectedDigitalItemList;
+    DigitalItemEntity digitalItemEntity1, digitalItemEntity2, digitalItemEntity3;
 
     @BeforeEach
     public void setUp() {
@@ -58,7 +59,7 @@ public class DigitalItemRESTControllerIntegrationTest {
                 .build();
         entityManager.persist(digitalSessionEntity);
 
-        DigitalItemEntity digitalItemEntity1 = DigitalItemEntity.builder()
+        digitalItemEntity1 = DigitalItemEntity.builder()
                 .digitalSession(digitalSessionEntity)
                 .description("Test: Description 1")
                 .lat(1L)
@@ -67,7 +68,7 @@ public class DigitalItemRESTControllerIntegrationTest {
                 .build();
         entityManager.persist(digitalItemEntity1);
 
-        DigitalItemEntity digitalItemEntity2 = DigitalItemEntity.builder()
+       digitalItemEntity2 = DigitalItemEntity.builder()
                 .digitalSession(digitalSessionEntity)
                 .description("Test: Description 2")
                 .lat(2L)
@@ -76,7 +77,7 @@ public class DigitalItemRESTControllerIntegrationTest {
                 .build();
         entityManager.persist(digitalItemEntity2);
 
-        DigitalItemEntity digitalItemEntity3 = DigitalItemEntity.builder()
+        digitalItemEntity3 = DigitalItemEntity.builder()
                 .digitalSession(digitalSessionEntity)
                 .description("Test: Description 3")
                 .lat(3L)
@@ -100,17 +101,16 @@ public class DigitalItemRESTControllerIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(get("/digitalItem/digitalItemBySession")
                         .param("digitalSessionId", String.valueOf(digitalSessionEntity.getId()))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
+                        .andExpect(status().isOk())
+                        .andReturn();
         List<DigitalItem> returnedDigitalItemList = this.objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<List<DigitalItem>>() {});
 
-        returnedDigitalItemList.forEach(System.out::println);
-
         assertThat(returnedDigitalItemList).isEqualTo(expectedDigitalItemList);
-
-
+        assertThat(returnedDigitalItemList).hasSize(3);
+        assert returnedDigitalItemList.contains(digitalItemEntity1.toDomain());
+        assert returnedDigitalItemList.contains(digitalItemEntity2.toDomain());
+        assert returnedDigitalItemList.contains(digitalItemEntity3.toDomain());
     }
 }

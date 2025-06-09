@@ -27,5 +27,4 @@ public class ArchitectureTest {
                     .that().resideInAPackage("edu.uoc.epcsd.user.domain.service..")
                     .and().areAnnotatedWith(Service.class)
                     .should().haveSimpleNameEndingWith("ServiceImpl");
-
 }
